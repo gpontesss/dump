@@ -39,6 +39,24 @@ Node* circular_list_walk_n(Node* list, int n) {
     return list;
 }
 
+/* Solves the Josephus problem: if N people have decided to comit mass suicide
+ * by aarranging themselves in a circle and killing the Mth person around the
+ * circle, who is the last to die?
+ * NOTE: n has to always be greater than 1.
+ */
+int josephus(int m, int n) {
+    // TODO: assert n and m are in correct ranges.
+    Node* circle = new_circular_list(1);
+    for(int i = 2; i <= m; i++) circular_list_append(circle, i);
+    while(circle->next != circle) {
+        circle = circular_list_walk_n(circle, n-2);
+        // TODO: free deleted node
+        circle->next = circle->next->next;
+        circle = circle->next;
+    }
+    return circle->val;
+}
+
 int main() {
     Node* list = new_circular_list(0);
     circular_list_println(list);
@@ -50,5 +68,9 @@ int main() {
     circular_list_println(list);
     list = circular_list_walk_n(list, 1);
     circular_list_println(list);
+
+    int people=9, nth=5;
+    printf("josephus for people=%d and nth=%d: %dth person is the last to die\n", people, nth, josephus(people, nth));
+
     return 0;
 }
