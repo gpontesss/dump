@@ -58,7 +58,7 @@ List* sieve_of_eratosthenes(int max) {
 }
 
 int main() {
-    int max = 1000;
+    int max = INT_MAX;
     List* primes = sieve_of_eratosthenes(max);
     list_println(primes);
     list_free(primes);
